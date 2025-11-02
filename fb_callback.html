@@ -1,14 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head><meta charset="utf-8"><title>FB Callback</title></head>
+<head>
+  <meta charset="utf-8">
+  <title>Facebook Callback</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; 
+           display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .card { padding:16px 20px; border:1px solid #eee; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,.06); }
+    .muted { color:#666; font-size:14px; margin-top:6px; }
+  </style>
+</head>
 <body>
-<script>
-  try {
-    if (window.opener && window.opener !== window) {
-      window.opener.postMessage(window.location.href, window.location.origin);
-    }
-  } catch(e){}
-  window.close();
-</script>
+  <div class="card">
+    <div>Giriş işlemi tamamlandı.</div>
+    <div class="muted">Bu pencere birkaç saniye içinde kapanacaktır. Kapanmazsa lütfen kapatın.</div>
+  </div>
+
+  <script>
+    (function () {
+      // Web popup senaryosu: opener varsa code'u geri bildir
+      try {
+        if (window.opener && window.opener !== window) {
+          window.opener.postMessage(window.location.href, "*");
+        }
+      } catch (e) {}
+
+      // Kapanmayı zorla (bazı tarayıcılar izin vermezse sessizce başarısız olur)
+      function tryClose() {
+        try { window.close(); } catch(e) {}
+        try { window.open('', '_self'); window.close(); } catch(e) {}
+      }
+      tryClose();
+      setTimeout(tryClose, 300);    // 0.3s sonra tekrar dene
+      setTimeout(tryClose, 1200);   // 1.2s sonra tekrar dene
+    })();
+  </script>
 </body>
 </html>
