@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>FB Callback</title></head>
+<body>
+<script>
+  try {
+    if (window.opener && window.opener !== window) {
+      window.opener.postMessage(window.location.href, window.location.origin);
+    }
+  } catch(e){}
+  window.close();
+</script>
+</body>
+</html>
