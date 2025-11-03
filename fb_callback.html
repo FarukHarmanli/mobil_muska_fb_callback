@@ -22,7 +22,8 @@
       // Web popup senaryosu: opener varsa code'u geri bildir
       try {
         if (window.opener && window.opener !== window) {
-          window.opener.postMessage(window.location.href, "*");
+          // window.opener.postMessage(window.location.href, "*");
+          window.opener.postMessage(window.location.href, targetOrigin);
         }
       } catch (e) {}
 
