@@ -7,24 +7,23 @@
       console.log("fb_callback.html loaded");
 
       if (!window.opener) {
-        console.error("No opener window found");
+        console.error("No opener window");
         return;
       }
 
-      const params = new URLSearchParams(window.location.search);
-      const targetOrigin = params.get("state"); // carries parentOrigin (http://localhost:49960)
-      console.log("targetOrigin =", targetOrigin);
+      const qs = new URLSearchParams(window.location.search);
+      const target = qs.get("state"); // parent origin
+      console.log("targetOrigin =", target);
 
-      if (!targetOrigin) {
-        console.error("No targetOrigin found in state");
+      if (!target) {
+        console.error("No targetOrigin (state) in URL");
         return;
       }
 
-      // Post the full URL (includes ?code=...)
-      window.opener.postMessage(window.location.href, targetOrigin);
+      // tam URL'yi geri gönder (code dahil)
+      window.opener.postMessage(window.location.href, target);
 
       console.log("Message posted to opener");
-      // Optional: close after short delay
       setTimeout(() => window.close(), 100);
     })();
   </script>
