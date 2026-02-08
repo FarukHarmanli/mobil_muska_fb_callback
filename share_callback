@@ -1,16 +1,36 @@
 <!doctype html>
 <html lang="en">
-  <meta charset="utf-8" />
-  <title>Share Callback</title>
-  <script>
-    (function () {
-      // Share dialog sonrası bu sayfaya dönünce direkt kapat
-      // (state aramayız, postMessage zorunlu değil)
-      try { window.close(); } catch (e) {}
+  <head>
+    <meta charset="utf-8" />
+    <title>Share Callback</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body { font-family: Arial, sans-serif; padding: 16px; }
+      button { padding: 10px 14px; font-size: 16px; }
+    </style>
+  </head>
+  <body>
+    <p>Paylaşım tamamlandı. Pencere otomatik kapanıyorsa birazdan kapanır.</p>
+    <p><button id="btn">Kapat</button></p>
 
-      // Bazı tarayıcılarda kapanmazsa kullanıcı görsün
-      document.body.innerHTML =
-        "<p>Paylaşım tamamlandı. Bu pencere otomatik kapanmazsa kapatabilirsiniz.</p>";
-    })();
-  </script>
+    <script>
+      function tryClose() {
+        // Bazı tarayıcılarda bu kombinasyon daha iyi çalışıyor
+        try { window.open('', '_self'); } catch (e) {}
+        try { window.close(); } catch (e) {}
+      }
+
+      // Hemen dene
+      tryClose();
+
+      // 100ms, 500ms, 1500ms tekrar dene (bazı cihazlarda gerekli)
+      setTimeout(tryClose, 100);
+      setTimeout(tryClose, 500);
+      setTimeout(tryClose, 1500);
+
+      document.getElementById('btn').addEventListener('click', function () {
+        tryClose();
+      });
+    </script>
+  </body>
 </html>
