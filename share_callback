@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Share Callback</title>
+  <script>
+    (function () {
+      // Share dialog sonrası bu sayfaya dönünce direkt kapat
+      // (state aramayız, postMessage zorunlu değil)
+      try { window.close(); } catch (e) {}
+
+      // Bazı tarayıcılarda kapanmazsa kullanıcı görsün
+      document.body.innerHTML =
+        "<p>Paylaşım tamamlandı. Bu pencere otomatik kapanmazsa kapatabilirsiniz.</p>";
+    })();
+  </script>
+</html>
